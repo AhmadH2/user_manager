@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #df600c;">
+    <a class="navbar-brand" href="">Users Manager</a>
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar = !toggleNavbar" data-toggle="collapse"
+        data-target="#my-navbar" aria-controls="my-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="my-navbar" [ngbCollapse]="toggleNavbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/home']"
+                    routerLinkActive="router-link-active">
+                    Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/users']"
+                    routerLinkActive="router-link-active">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active">
+                    About</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
