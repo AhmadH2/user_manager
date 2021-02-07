@@ -1,1 +1,27 @@
-<p>users works!</p>
+
+<div class="col-6">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Role</td>
+                <td>Status</td>
+                <td>Cr. Date</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>{{user.status}}</td>
+                <td>{{user.crDate}}</td>
+                <td><i class="fas fa-plus"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
