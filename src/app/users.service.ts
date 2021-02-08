@@ -6,7 +6,7 @@ import { User } from './user';
 })
 export class UsersService {
 
-  users: User[] = [];
+  users: User[] = [new User(1, 'Test', 'test@gmail.com', 'Engineer', 'Single', Date.now())];
 
   constructor() { }
 

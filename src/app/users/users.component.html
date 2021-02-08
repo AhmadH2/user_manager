@@ -1,5 +1,5 @@
 
-<div class="col-6">
+<div class="col-8">
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -9,19 +9,42 @@
                 <td>Role</td>
                 <td>Status</td>
                 <td>Cr. Date</td>
-                <td></td>
+                <td>Action</td>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of users">
+            <tr *ngFor="let user of users; let i=index">
                 <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
+                <td>
+                    <img [src]="user.image" *ngIf="user.image" width="50px" height="50px">
+                    {{user.name}}
+                </td>
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
                 <td>{{user.status}}</td>
-                <td>{{user.crDate}}</td>
-                <td><i class="fas fa-plus"></i></td>
+                <td>{{user.crDate | date}}</td>
+                <td style="width: 100px;">
+                    <ng-template #editUserModal let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Edit User</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <app-user-form [user]="user" (emitter)="editUser($event, i)"></app-user-form>
+                        </div>
+                    </ng-template>
+
+                    <a (click)="open(editUserModal)">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </a>
+                    &nbsp;
+                    <a (click)="deleteUser(i)"><i class="fa fa-times-circle fa-lg"></i></a>
+                </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+

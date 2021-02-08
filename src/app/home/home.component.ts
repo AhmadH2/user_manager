@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   user:User;
 
   constructor(private modalService: NgbModal, private usersService: UsersService) { 
-    this.user = new User(0, '', ' ', '', '', Date.now())
+    this.user = new User(0, '', ' ', '', '', Date.now(), '')
   }
 
   ngOnInit(): void {
@@ -23,7 +23,8 @@ export class HomeComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  addUser() {
+  addUser(user: User) {
+    this.user = user;
     this.usersService.addUser(this.user);
     this.modalService.dismissAll();
   }
