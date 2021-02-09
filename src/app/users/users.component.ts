@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../user';
 import { UsersService } from '../users.service';
 
@@ -10,14 +11,20 @@ import { UsersService } from '../users.service';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  users: any[] = [];
+
 
   constructor(private usersService: UsersService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.users = this.usersService.getUsers();
+    this.usersService.getUsers().subscribe(
+      (u) => {
+        u.docs.forEach(element => {
+          this.users.push(element.data())
+        });
+      }
+    )
   }
-
   print(u) {
     return JSON.stringify(u);
   }
@@ -34,5 +41,6 @@ export class UsersComponent implements OnInit {
   deleteUser(index:number) {
     this.usersService.getUsers().splice(index, 1);
   }
+
 
 }

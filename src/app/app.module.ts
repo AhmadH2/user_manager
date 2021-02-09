@@ -10,7 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { AboutComponent } from './about/about.component';
 import {FormsModule} from '@angular/forms';
-import { UserFormComponent } from './user-form/user-form.component'
+import { UserFormComponent } from './user-form/user-form.component';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { UserFormComponent } from './user-form/user-form.component'
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
