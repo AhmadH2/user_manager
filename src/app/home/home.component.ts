@@ -16,7 +16,15 @@ export class HomeComponent implements OnInit {
     this.user = new User(0, '', ' ', '', '', Date.now(), '')
   }
 
+  id:any;
+
   ngOnInit(): void {
+    this.usersService.getUser().subscribe(
+      (u) => {
+        this.id = u;
+      }
+    );
+    
   }
 
   open(content) {

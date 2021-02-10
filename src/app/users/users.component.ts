@@ -33,14 +33,16 @@ export class UsersComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  editUser(user: User, index: number) {
-    Object.assign(this.usersService.getUsers()[index], user);
+  editUser(user:User, userName: string) {
+    this.usersService.update(user, userName);
     this.modalService.dismissAll();
   }
 
-  deleteUser(index:number) {
-    this.usersService.getUsers().splice(index, 1);
+  deleteUser(name) {
+    this.usersService.delete(name);
+    console.log("clicked");
   }
+  
 
 
 }

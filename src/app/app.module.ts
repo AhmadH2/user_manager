@@ -14,6 +14,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     NgbModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

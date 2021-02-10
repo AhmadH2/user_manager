@@ -17,8 +17,17 @@
     </div>
     <div>
         <label>Upload Image</label> <br>
-        <input #file type="file" (change)="uploadImage(file.files)">
-        <img [src]="imgURL" *ngIf="imgURL" width="50px" height="50px">&nbsp;
+        <!-- <input #file type="file" (change)="uploadImage(file.files)"> -->
+        <!-- <img [src]="imgURL" *ngIf="imgURL" width="50px" height="50px">&nbsp; -->
+        <input type="file" (change)="upload($event)">
+        <progress max="100" [value]="(uploadProgress | async)"></progress>
+        <div class="result" *ngIf="downloadURL | async; let uploadSrc">
+            <a [href]="uploadSrc">You just uploaded this file!</a>
+        </div>
+        
+        <div class="container" *ngIf="downloadURL | async; let url">
+            <img [src]="url" alt="Image from AngularFireStorage" style="width: 50px; height: 50px;">
+        </div>
     </div>
 </form>
 <button class="btn btn-success" (click)="save()">Save</button>
