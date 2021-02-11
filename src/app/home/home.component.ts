@@ -19,11 +19,6 @@ export class HomeComponent implements OnInit {
   id:any;
 
   ngOnInit(): void {
-    this.usersService.getUser().subscribe(
-      (u) => {
-        this.id = u;
-      }
-    );
     
   }
 

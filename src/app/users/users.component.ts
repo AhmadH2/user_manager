@@ -13,36 +13,32 @@ export class UsersComponent implements OnInit {
 
   users: any[] = [];
 
-
   constructor(private usersService: UsersService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
+
     this.usersService.getUsers().subscribe(
-      (u) => {
-        u.docs.forEach(element => {
-          this.users.push(element.data())
-        });
+      (d) => {
+       this.users = d;
       }
     )
-  }
-  print(u) {
-    return JSON.stringify(u);
+
+    
   }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  editUser(user:User, userName: string) {
-    this.usersService.update(user, userName);
+  editUser(user:User, id: string) {
+    this.usersService.updateUser(user, id);
     this.modalService.dismissAll();
   }
 
-  deleteUser(name) {
-    this.usersService.delete(name);
+  deleteUser(id, image) {
+    this.usersService.deleteUser(id, image);
     console.log("clicked");
   }
-  
 
 
 }

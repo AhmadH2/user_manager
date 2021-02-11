@@ -9,23 +9,28 @@
     </div>
     <div class="form-group">
         <label>Role</label>
-        <input type="text" class="form-control" [(ngModel)]="myUser.role" name="role">
+        <select [(ngModel)]="myUser.role" name="role">
+            <option value="User">User</option>
+            <option value="Administrator">Administrator</option>
+        </select>
     </div>
     <div class="form-group">
         <label>Status</label>
-        <input type="text" class="form-control" [(ngModel)]="myUser.status" name="status">
+        <select [(ngModel)]="myUser.status" name="status">
+            <option value="Active">Active</option>
+            <option value="Locked">Locked</option>
+            <option value="Disabled">Disabled</option>
+        </select>
     </div>
     <div>
         <label>Upload Image</label> <br>
-        <!-- <input #file type="file" (change)="uploadImage(file.files)"> -->
-        <!-- <img [src]="imgURL" *ngIf="imgURL" width="50px" height="50px">&nbsp; -->
-        <input type="file" (change)="upload($event)">
+        <input type="file" (change)="uploadImage($event)">
         <progress max="100" [value]="(uploadProgress | async)"></progress>
-        <div class="result" *ngIf="downloadURL | async; let uploadSrc">
-            <a [href]="uploadSrc">You just uploaded this file!</a>
+        <div class="result" *ngIf="url">
+            <a [href]="url">You just uploaded this file!</a>
         </div>
         
-        <div class="container" *ngIf="downloadURL | async; let url">
+        <div class="container" *ngIf="url">
             <img [src]="url" alt="Image from AngularFireStorage" style="width: 50px; height: 50px;">
         </div>
     </div>

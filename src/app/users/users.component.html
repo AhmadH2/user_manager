@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users; let i=index">
-                <td>{{i}}</td>
+                <td>{{user.id}}</td>
                 <td>
                     <img [src]="user.image" width="50px" height="50px">
                     {{user.name}}
@@ -32,7 +32,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <app-user-form [user]="user" (emitter)="editUser($event, user.name)"></app-user-form>
+                            <app-user-form [user]="user" (emitter)="editUser($event, user.id)"></app-user-form>
                         </div>
                     </ng-template>
 
@@ -40,7 +40,7 @@
                         <i class="fa fa-edit fa-lg"></i>
                     </a>
                     &nbsp;
-                    <a (click)="deleteUser(user.name)"><i class="fa fa-times-circle fa-lg"></i></a>
+                    <a (click)="deleteUser(user.id, user.image)"><i class="fa fa-times-circle fa-lg"></i></a>
                 </td>
             </tr>
         </tbody>
