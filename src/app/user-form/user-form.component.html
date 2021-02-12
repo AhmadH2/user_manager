@@ -25,7 +25,7 @@
     <div>
         <label>Upload Image</label> <br>
         <input type="file" (change)="uploadImage($event)">
-        <progress max="100" [value]="(uploadProgress | async)"></progress>
+        <progress max="100" [value]="(uploadProgress$ | async)"></progress>
         <div class="result" *ngIf="url">
             <a [href]="url">You just uploaded this file!</a>
         </div>

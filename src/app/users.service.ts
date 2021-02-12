@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { User } from './user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+
+export interface FilesUploadMetadata {
+  uploadProgress$: Observable<number>;
+  downloadUrl$: Observable<string>;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +16,9 @@ import { finalize } from 'rxjs/operators';
 export class UsersService {
 
   users: any;
-  constructor(private firestore: AngularFirestore, private afStorage: AngularFireStorage ) { 
-    // this.ref = this.afStorage.ref('/images/' + 0);
-    // this.task = this.ref.put('');
-  }
+  constructor(private firestore: AngularFirestore, private afStorage: AngularFireStorage ) { }
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  downloadURL: Observable<any>;
-  url: string;
 
   getUsers(): any {
     return this.firestore.collection("users").valueChanges({ idField: 'id' });
@@ -49,31 +49,23 @@ export class UsersService {
       status: user.status,
       image: user.image
     });
-  }
+  }  
 
-  uploadImage(event) {
-    // create a random id
+  uploadFileAndGetMetadata(event): FilesUploadMetadata {
     const randomId = Math.random().toString(36).substring(2);
     this.ref = this.afStorage.ref('/images/' + randomId);
     this.task = this.ref.put(event.target.files[0]);
-    
-    let uploadProgress = this.task.percentageChanges();
 
-    // get notified when the download URL is available
-    return new Promise(resolve => {
-      this.task.snapshotChanges().pipe(
-        finalize(() => {
-          this.downloadURL = this.ref.getDownloadURL();
-          this.downloadURL.subscribe(
-            (d) => {
-              this.url = d;
-              console.log(this.url);
-              resolve({url: this.url, progress: uploadProgress});
-            }
-          )
-        })).subscribe(); 
-    })
-     
+    return {
+      uploadProgress$: this.task.percentageChanges(),
+      downloadUrl$: this.getDownloadUrl$(),
+    };
+  }
+
+  private getDownloadUrl$(): Observable<string> {
+    return from(this.task).pipe(
+      switchMap((_) => this.ref.getDownloadURL()),
+    );
   }
   
 }
