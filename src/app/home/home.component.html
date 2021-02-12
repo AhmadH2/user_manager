@@ -6,7 +6,7 @@
              Add User</button>
     </div> <br>
     <div class="form-group col-sm-6">
-        <label>Search for specific user</label>
+        <label>Search for a specific user</label>
         <input class="form-control" type="text" [(ngModel)]="searchterm" (keyup)="search()" placeholder="Search by name">
         <p *ngFor="let name of names">{{name}}</p>
     </div>

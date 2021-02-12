@@ -38,6 +38,7 @@ export class UsersComponent implements OnInit {
   deleteUser(id, image) {
     this.usersService.deleteUser(id, image);
     console.log("clicked");
+    this.modalService.dismissAll();
   }
 
 
