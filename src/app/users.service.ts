@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { User } from './user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
@@ -20,7 +20,7 @@ export class UsersService {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
-  getUsers(): any {
+  getUsers(): Observable<any> {
     return this.firestore.collection("users").valueChanges({ idField: 'id' });
   }
 
@@ -67,5 +67,10 @@ export class UsersService {
       switchMap((_) => this.ref.getDownloadURL()),
     );
   }
+
+ 
+  search(userName) {
+    return this.firestore.collection('users', ref => ref.where("name", "==", userName)).valueChanges();
+  };
   
 }

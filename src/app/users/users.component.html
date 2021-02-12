@@ -1,5 +1,5 @@
 
-<div class="col-8">
+<div class="col-10 div-table">
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -9,7 +9,7 @@
                 <td>Role</td>
                 <td>Status</td>
                 <td>Cr. Date</td>
-                <td>Action</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <td>{{user.role}}</td>
                 <td>{{user.status}}</td>
                 <td>{{user.crDate | date}}</td>
-                <td style="width: 100px;">
+                <td>
                     <ng-template #editUserModal let-modal>
                         <div class="modal-header">
                             <h4 class="modal-title" id="modal-basic-title">Edit User</h4>

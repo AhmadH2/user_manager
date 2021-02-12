@@ -1,4 +1,16 @@
-<p>Welcome to User Manger Application</p>
+
+<div class="container-fluid">
+    <p>Welcome to User Manger Application</p><br>
+    <div class="col-sm-6">
+        <button class="btn btn-warning" (click)="open(addUserModal)"><i class="fa fa-plus"></i>
+             Add User</button>
+    </div> <br>
+    <div class="form-group col-sm-6">
+        <label>Search for specific user</label>
+        <input class="form-control" type="text" [(ngModel)]="searchterm" (keyup)="search()" placeholder="Search by name">
+        <p *ngFor="let name of names">{{name}}</p>
+    </div>
+</div>
 
 <ng-template #addUserModal let-modal>
     <div class="modal-header">
@@ -11,4 +23,3 @@
         <app-user-form [user]="user" (emitter)="addUser($event)"></app-user-form>
     </div>
 </ng-template>
-<button class="btn btn-primary" (click)="open(addUserModal)"><i class="fa fa-plus"></i> Add User</button>

@@ -1,33 +1,59 @@
-<form>
+<form [formGroup]="userForm">
     <div class="form-group">
         <label>Name</label>
-        <input type="text" class="form-control" [(ngModel)]="myUser.name" name="name">
+        <input type="text" class="form-control" [(ngModel)]="myUser.name" name="name" formControlName="name">
+        <div class="alert alert-danger" *ngIf='name.invalid && name.touched'>
+            <div *ngIf='name.errors.required'>
+                Name is required
+            </div>
+            <div *ngIf='name.errors.pattern'>
+                Name should contain letters, digits and '_' only!
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label>Email</label>
-        <input type="email" class="form-control" [(ngModel)]="myUser.email" name="email">
+        <input type="email" class="form-control" [(ngModel)]="myUser.email" name="email" formControlName='email'>
+        <div class="alert alert-danger" *ngIf='email.invalid && email.touched'>
+            <div *ngIf='email.errors.required'>
+                Email is required
+            </div>
+            <div *ngIf="email.errors.email">
+                Not a Valid Email
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label>Role</label>
-        <select [(ngModel)]="myUser.role" name="role">
+        <select [(ngModel)]="myUser.role" name="role" formControlName='role'>
             <option value="User">User</option>
             <option value="Administrator">Administrator</option>
         </select>
+        <div class="alert alert-danger" *ngIf='role.invalid && role.touched'>
+            <div *ngIf='role.errors.required'>
+                Role is required
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label>Status</label>
-        <select [(ngModel)]="myUser.status" name="status">
-            <option value="Active">Active</option>
+        <select [(ngModel)]="myUser.status" name="status" formControlName='status'>
+            <option value="Active" selected="selected">Active</option>
             <option value="Locked">Locked</option>
             <option value="Disabled">Disabled</option>
         </select>
+        <div class="alert alert-danger" *ngIf='status.invalid && status.touched'>
+            <div *ngIf='status.errors.required'>
+                Status is required
+            </div>
+        </div>
     </div>
     <div>
         <label>Upload Image</label> <br>
-        <input type="file" (change)="uploadImage($event)">
+        <input type="file" (change)="uploadImage($event)" formControlName='image'>
         <progress max="100" [value]="(uploadProgress$ | async)"></progress>
         <div class="result" *ngIf="url">
-            <a [href]="url">You just uploaded this file!</a>
+            <a [href]="url">You just uploaded this iamge!</a>
         </div>
         
         <div class="container" *ngIf="url">
@@ -35,4 +61,5 @@
         </div>
     </div>
 </form>
-<button class="btn btn-success" (click)="save()">Save</button>
+<br>
+<button class="btn btn-success" (click)="save()" [disabled]='!userForm.valid || addUserFlag()'>Save</button>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User } from '../user';
 import { UsersService } from '../users.service';
@@ -14,35 +15,33 @@ export class UserFormComponent implements OnInit {
 
   uploadProgress: number;
   url: any;
-
-  ngOnInit(): void {
-    Object.assign(this.myUser, this.user);
-    // this.usersService.getUploadProgress('').subscribe(
-    //   (d) => {
-    //     if(d) {
-    //       this.uploadProgress = d
-    //     }
-    //   }
-    // );
-  }
-
+  userForm: any;
   @Input()
   user: User;
-  myUser: User = new User(0, '', '', '', '', Date.now(), 'init');
+  myUser: User = new User(0, '', '', '', '', Date.now(), '');
   uploadProgress$: Observable<any>;
 
   @Output() emitter = new EventEmitter<User>();
 
+  ngOnInit(): void {
+    Object.assign(this.myUser, this.user);
+    this.userForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9_]*")]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      role : new FormControl('', [Validators.required]),
+      status: new FormControl('', Validators.required),
+      image: new FormControl('' )
+    })
+  }
+  get name() { return this.userForm.get("name"); }
+  get email() { return this.userForm.get("email"); }
+  get role() { return this.userForm.get("role"); }
+  get status() { return this.userForm.get("status"); }
+  get image() { return this.userForm.get("image"); }
+
   save() {
     this.emitter.emit(this.myUser);
   }
-
-  // async uploadImage(event) {
-  //   var obj = await this.usersService.uploadImage(event);
-  //   this.url = obj["url"];
-  //   // this.uploadProgress = obj["progress"]
-  //   this.myUser.image = this.url;
-  // }
 
   uploadImage(event) {
     const { downloadUrl$, uploadProgress$ } = this.usersService.uploadFileAndGetMetadata(event);
@@ -54,6 +53,10 @@ export class UserFormComponent implements OnInit {
         this.myUser.image = this.url;
       }
     )
+  }
+
+  addUserFlag():boolean {
+    return !(this.user.image != '' || this.myUser.image != '');
   }
 
   

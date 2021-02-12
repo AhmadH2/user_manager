@@ -10,16 +10,21 @@ import { UsersService } from '../users.service';
 })
 export class HomeComponent implements OnInit {
 
-  user:User;
+  user: User;
+  users: User[] = [];
+  names: string[];
 
   constructor(private modalService: NgbModal, private usersService: UsersService) { 
     this.user = new User(0, '', ' ', '', '', Date.now(), '')
   }
 
   id:any;
+  searchterm: string = '';
 
   ngOnInit(): void {
-    
+    this.usersService.getUsers().subscribe(
+      (u) => this.users = u
+    )
   }
 
   open(content) {
@@ -30,6 +35,17 @@ export class HomeComponent implements OnInit {
     this.user = user;
     this.usersService.addUser(this.user);
     this.modalService.dismissAll();
+  }
+
+  search() {
+    this.names = [];
+    if(this.searchterm != '') {
+      this.users.forEach((user) => {
+        if (user.name.toLowerCase().search(this.searchterm.toLowerCase()) != -1) {
+          this.names.push(user.name)
+        }
+      })
+    }
   }
 
 }
