@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { User } from '../user';
-import { UsersService } from '../users.service';
+import { User } from 'src/app/user';
+import { UsersService } from 'src/app/services/users-service/users.service';
 
 @Component({
   selector: 'app-users',
@@ -22,8 +22,6 @@ export class UsersComponent implements OnInit {
        this.users = d;
       }
     )
-
-    
   }
 
   open(content) {
@@ -35,7 +33,7 @@ export class UsersComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  deleteUser(id, image) {
+  deleteUser(id: string, image: string) {
     this.usersService.deleteUser(id, image);
     console.log("clicked");
     this.modalService.dismissAll();

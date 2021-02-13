@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { User } from '../user';
-import { UsersService } from '../users.service';
+import { User } from 'src/app/user';
+import { UsersService } from 'src/app/services/users-service/users.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
   selector: 'app-user-form',
@@ -11,7 +12,7 @@ import { UsersService } from '../users.service';
 })
 export class UserFormComponent implements OnInit {
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private storageService: StorageService) { }
 
   uploadProgress: number;
   url: any;
@@ -44,7 +45,7 @@ export class UserFormComponent implements OnInit {
   }
 
   uploadImage(event) {
-    const { downloadUrl$, uploadProgress$ } = this.usersService.uploadFileAndGetMetadata(event);
+    const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(event.target.files[0]);
     this.uploadProgress$ = uploadProgress$;
     downloadUrl$.pipe().subscribe(
       (d) => {
@@ -58,7 +59,5 @@ export class UserFormComponent implements OnInit {
   addUserFlag():boolean {
     return !(this.user.image != '' || this.myUser.image != '');
   }
-
-  
 
 }

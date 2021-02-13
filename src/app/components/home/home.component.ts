@@ -1,7 +1,7 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '../user';
-import { UsersService } from '../users.service';
+import { User } from 'src/app/user';
+import { UsersService } from 'src/app/services/users-service/users.service';
 
 @Component({
   selector: 'app-home',
