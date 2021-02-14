@@ -17,10 +17,10 @@ export class StorageService {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
-  uploadFileAndGetMetadata(file): FilesUploadMetadata {
+  uploadImageAndGetMetadata(image): FilesUploadMetadata {
     const randomId = Math.random().toString(36).substring(2);
     this.ref = this.afStorage.ref('/images/' + randomId);
-    this.task = this.ref.put(file);
+    this.task = this.ref.put(image);
 
     return {
       uploadProgress$: this.task.percentageChanges(),

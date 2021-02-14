@@ -45,7 +45,7 @@ export class UserFormComponent implements OnInit {
   }
 
   uploadImage(event) {
-    const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(event.target.files[0]);
+    const { downloadUrl$, uploadProgress$ } = this.storageService.uploadImageAndGetMetadata(event.target.files[0]);
     this.uploadProgress$ = uploadProgress$;
     downloadUrl$.pipe().subscribe(
       (d) => {
