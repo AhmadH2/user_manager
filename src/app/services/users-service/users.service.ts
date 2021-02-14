@@ -33,13 +33,23 @@ export class UsersService {
   }
 
   updateUser(user: User, id: string) {
-    this.firestore.collection("users").doc(id).update({
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      image: user.image
-    });
+    
+    this.firestore.collection('users').doc(id).valueChanges().subscribe(
+      (u: User) => { 
+        if(user.image != u.image) {
+          this.storageService.deleteImage(u.image);
+        }
+
+        this.firestore.collection("users").doc(id).update({
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          status: user.status,
+          image: user.image
+        });
+      }
+        
+    )
   }  
   
 }
