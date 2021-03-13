@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/user';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users-service/users.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 
@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
 
   constructor(private usersService: UsersService, private storageService: StorageService) { }
 
@@ -21,6 +21,7 @@ export class UserFormComponent implements OnInit {
   user: User;
   myUser: User = new User(0, '', '', '', '', Date.now(), '');
   uploadProgress$: Observable<any>;
+  subscription: Subscription;
 
   @Output() emitter = new EventEmitter<User>();
 
@@ -47,10 +48,9 @@ export class UserFormComponent implements OnInit {
   uploadImage(event) {
     const { downloadUrl$, uploadProgress$ } = this.storageService.uploadImageAndGetMetadata(event.target.files[0]);
     this.uploadProgress$ = uploadProgress$;
-    downloadUrl$.pipe().subscribe(
+    this.subscription = downloadUrl$.pipe().subscribe(
       (d) => {
         this.url = d;
-        console.log(this.url);
         this.myUser.image = this.url;
       }
     )
@@ -58,6 +58,10 @@ export class UserFormComponent implements OnInit {
 
   addUserFlag():boolean {
     return !(this.user.image != '' || this.myUser.image != '');
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

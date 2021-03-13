@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'src/app/user';
+import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users-service/users.service';
 
 @Component({
@@ -38,6 +38,5 @@ export class UsersComponent implements OnInit {
     console.log("clicked");
     this.modalService.dismissAll();
   }
-
 
 }

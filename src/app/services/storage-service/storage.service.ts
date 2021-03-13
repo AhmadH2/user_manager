@@ -10,7 +10,7 @@ export interface FilesUploadMetadata {
 
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class StorageService {
 
   constructor(private afStorage: AngularFireStorage) { }
